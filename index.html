@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #111;
+      background: #000;
       color: #fff;
       display: flex;
       align-items: center;
@@ -15,33 +15,125 @@
       height: 100vh;
       margin: 0;
       text-align: center;
+      overflow: hidden;
     }
+
     .box {
       max-width: 360px;
+      width: calc(100% - 32px);
       padding: 24px;
       background: #1c1c1c;
       border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.12);
+      animation: aparecer 0.5s ease;
+      position: relative;
     }
-    a {
-      display: inline-block;
+
+    h1 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 12px;
       margin-top: 16px;
+    }
+
+    button {
+      margin-top: 18px;
       padding: 12px 18px;
+      border: 0;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
       background: #25D366;
       color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
+      position: relative;
+      transition: transform 0.15s ease;
+    }
+
+    .flash {
+      animation: flash 0.15s linear 6;
+    }
+
+    @keyframes aparecer {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes flash {
+      0%   { background: #000; }
+      50%  { background: #300; }
+      100% { background: #000; }
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>tu é gay mano ? </h1>
-    <p>Agora aperta o botão abaixo pra admitir no WhatsApp 😂</p>
-    <img src="macaco.jpg" style="max-width:100%; border-radius:12px;">
-    <a href="https://wa.me/5591991792405?text=Eu%20sou%C3%AD%20gay!%20%" target="_blank">
-      Mandar mensagem
-    </a>
+  <div class="box" id="box">
+    <h1> 🤡</h1>
+
+    <p>
+      🎊🎉 PARABÉNS 🎉🎊<br><br>
+      Você acaba de ganahr uma carrada de piroca 😂
+    </p>
+
+    <img src="macaco.jpg" alt="macaco">
+
+    <br>
+    <button id="btnFuja">clique aqui pra sair</button>
+
+    <audio id="som" preload="auto">
+      <source src="som.mp3" type="audio/mpeg">
+    </audio>
   </div>
+
+  <script>
+    const botao = document.getElementById("btnFuja");
+    const som = document.getElementById("som");
+    const body = document.body;
+
+    function tocarSom() {
+      som.play().catch(() => {});
+    }
+
+    function vibrar() {
+      if (navigator.vibrate) {
+        navigator.vibrate([200, 100, 200, 100, 300]);
+      }
+    }
+
+    function sustoVisual() {
+      body.classList.add("flash");
+      setTimeout(() => body.classList.remove("flash"), 1200);
+    }
+
+    function fugir() {
+      const maxX = window.innerWidth / 2 - 120;
+      const maxY = window.innerHeight / 2 - 80;
+
+      const x = (Math.random() * 2 - 1) * Math.max(40, maxX);
+      const y = (Math.random() * 2 - 1) * Math.max(40, maxY);
+
+      botao.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    window.addEventListener("load", () => {
+      tocarSom();
+      vibrar();
+      sustoVisual();
+    });
+
+    document.body.addEventListener("click", tocarSom, { once: true });
+
+    botao.addEventListener("touchstart", fugir);
+    botao.addEventListener("mouseenter", fugir);
+    botao.addEventListener("click", fugir);
+  </script>
 </body>
 </html>
