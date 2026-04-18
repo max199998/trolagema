@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Surpresa</title>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -29,16 +30,8 @@
       position: relative;
     }
 
-    h1 {
-      margin-top: 0;
-      font-size: 28px;
-    }
-
-    p {
-      line-height: 1.5;
-    }
-
     img {
+      width: 180px;
       max-width: 100%;
       border-radius: 12px;
       margin-top: 16px;
@@ -74,23 +67,26 @@
     }
   </style>
 </head>
+
 <body>
-  <div class="box" id="box">
-    <h1> 🤡</h1>
+
+  <div class="box">
+    <h1>🤡</h1>
 
     <p>
-      🎊🎉 PARABÉNS 🎉🎊<br><br>
-      Você acaba de ganhar uma carrada de piroca 😂
+      🎊🎉 PARABÉNS GAY! 🎉🎊<br><br>
+      Você acaba de ganhar um carrada de rola 😂
     </p>
 
-    <img src="macaco.jpg" alt="macaco" style="width: 180px; max-width: 100%; border-radius: 12px; margin-top: 16px;">
+    <img src="macaco.jpg" alt="macaco">
 
     <br>
     <button id="btnFuja">clique aqui pra sair</button>
 
-    <audio id="som" autoplay loop>
-  <source src="som.mp3" type="audio/mpeg">
-</audio>
+    <!-- Áudio -->
+    <audio id="som" loop preload="auto">
+      <source src="som.mp3" type="audio/mpeg">
+    </audio>
   </div>
 
   <script>
@@ -99,15 +95,10 @@
     const body = document.body;
 
     function tocarSom() {
+      som.volume = 1.0;
       som.play().catch(() => {});
     }
-// tenta tocar sozinho
-  window.addEventListener("load", tocarSom);
 
-  // toca no primeiro toque (funciona no celular)
-  document.addEventListener("click", tocarSom, { once: true });
-  document.addEventListener("touchstart", tocarSom, { once: true });
-    
     function vibrar() {
       if (navigator.vibrate) {
         navigator.vibrate([200, 100, 200, 100, 300]);
@@ -129,17 +120,21 @@
       botao.style.transform = `translate(${x}px, ${y}px)`;
     }
 
+    // Ao abrir
     window.addEventListener("load", () => {
       tocarSom();
       vibrar();
       sustoVisual();
     });
 
-    document.body.addEventListener("click", tocarSom, { once: true });
+    // Garante no celular
+    document.addEventListener("click", tocarSom, { once: true });
+    document.addEventListener("touchstart", tocarSom, { once: true });
 
     botao.addEventListener("touchstart", fugir);
     botao.addEventListener("mouseenter", fugir);
     botao.addEventListener("click", fugir);
   </script>
+
 </body>
 </html>
